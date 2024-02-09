@@ -9,6 +9,7 @@
 
 void enterToContinue() {
 	printf("Press enter to continue.\n");
+	fflush(stdout);
 	while(getchar() != '\n');
 }
 
@@ -70,7 +71,7 @@ int main() {
 					scanf("%99s", word);
 				}
 				if (search_trie(root, word)) {
-					loadingScreen().
+					loadingScreen();
 					printf("Slang word : %s\n", word);
 					printf("Description : %s\n", description);
 					enterToContinue();
@@ -84,12 +85,13 @@ int main() {
 				printf("Input a prefix to be searched: ");
 				scanf("%s", word);
 				search_trie(root, word);
-				Sleep(3000);
+				Sleep(1000);
+				enterToContinue();
 				break;
 			case 4:
 				printtrie(root);
+				Sleep(1000);
 				enterToContinue();
-				Sleep(3000);
 				break;
 			case  5:
 				printf("Exiting program.\n");
