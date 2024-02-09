@@ -14,10 +14,15 @@ void enterToContinue() {
 
 void loadingScreen() {
 	printf("Loading");
+	fflush(stdout);
+	
 	for(int i = 0; i < 3; i++) {
+		Sleep(500);
 		printf(".");
-		Sleep(200);
+		fflush(stdout);
 	}
+	printf("\n");
+	Sleep(500);
 }
 
 int main() {
@@ -52,7 +57,8 @@ int main() {
 				getchar();
 				trieInsert(&root, word);
 				printf("Slang '%s' inserted.\n", word);
-				Sleep(2500);
+				loadingScreen();
+				enterToContinue();
 				break;
 			case  2:
 				printf("Enter slang to search for [Must be more than 1 characters and contains no space]: ");
@@ -64,24 +70,26 @@ int main() {
 					scanf("%99s", word);
 				}
 				if (search_trie(root, word)) {
-					printf("Slang word : %99s\n", word);
-					printf("Description : %99s", description);
-					Sleep(2500);
+					loadingScreen().
+					printf("Slang word : %s\n", word);
+					printf("Description : %s\n", description);
+					enterToContinue();
 				} else {
+					loadingScreen();
 					printf("Word not found.\n");
-					Sleep(2500);
+					enterToContinue();
 				}
 				break;
 			case 3:
 				printf("Input a prefix to be searched: ");
 				scanf("%s", word);
 				search_trie(root, word);
-				break;
-			case  4:
-				printtrie(root);
 				Sleep(3000);
-
+				break;
+			case 4:
+				printtrie(root);
 				enterToContinue();
+				Sleep(3000);
 				break;
 			case  5:
 				printf("Exiting program.\n");
