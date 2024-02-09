@@ -42,22 +42,20 @@ bool trieInsert(trienode **root, const char *signedtext) {
 }
 
 void print_trie(trienode *node, unsigned char *prefix, int length, int *counter) {
+    if (node->terminal) {
+        printf("%d. %s\n", ++(*counter), prefix);
+    }
 
-	if(node->terminal) {
-		printf("%d. %s\n", ++(*counter), prefix);
-	}
+    unsigned char newPref[length + 2];
+    memcpy(newPref, prefix, length);
+    newPref[length + 1] = '\0';
 
-	unsigned char newPref[length + 2];
-	memcpy(newPref, prefix, length);
-	newPref[length + 1] = '\0';
-
-
-	for(int i = 0; i < char_num; i++) {
-		if(node->child_node[i] != NULL) {
-			newPref[length] = i;
-			print_trie(node->child_node[i], newPref, length + 1, counter);
-		}
-	}
+    for (int i = 0; i < char_num; i++) {
+        if (node->child_node[i] != NULL) {
+            newPref[length] = i;
+            print_trie(node->child_node[i], newPref, length + 1, counter);
+        }
+    }
 }
 
 void printtrie(trienode *root) {
@@ -72,20 +70,21 @@ void printtrie(trienode *root) {
 }
 
 void search_prefix(trienode *node, unsigned char *prefix, int length, int originalLength) {
-	if (node == NULL) {
-		return;
-	}
-	
-	if (node->terminal) {
-		printf("%s\n", prefix);
-	}
-	
-	for(int i = 0;i < char_num; i++) {
-		if(node->child_node[i] != NULL) {
-			prefix[length] = i;
-			search_prefix(node->child_node[i], prefix, length + 1, originalLength);
-		}
-	}
+    if (node == NULL) {
+        return;
+    }
+
+    if (node->terminal) {
+        prefix[length] = '\0';  // Ensure null-termination
+        printf("%s\n", prefix);
+    }
+
+    for (int i = 0; i < char_num; i++) {
+        if (node->child_node[i] != NULL) {
+            prefix[length] = i;
+            search_prefix(node->child_node[i], prefix, length + 1, originalLength);
+        }
+    }
 }
 
 bool search_trie(trienode *root, char *signedtext) {
