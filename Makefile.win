@@ -1,15 +1,15 @@
-# Project: Project11
+# Project: Project3
 # Makefile created by Embarcadero Dev-C++ 6.3
 
 CPP      = g++.exe -D__DEBUG__
 CC       = gcc.exe -D__DEBUG__
 WINDRES  = windres.exe
-OBJ      = trienode.o listnode.o main.o
-LINKOBJ  = trienode.o listnode.o main.o
+OBJ      = main.o trienode.o listnode.o
+LINKOBJ  = main.o trienode.o listnode.o
 LIBS     = -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/lib" -L"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/x86_64-w64-mingw32/lib" -static-libgcc -g3
 INCS     = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/lib/gcc/x86_64-w64-mingw32/10.3.0/include"
 CXXINCS  = -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/x86_64-w64-mingw32/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/lib/gcc/x86_64-w64-mingw32/10.3.0/include" -I"C:/Program Files (x86)/Embarcadero/Dev-Cpp/TDM-GCC/lib/gcc/x86_64-w64-mingw32/10.3.0/include/c++"
-BIN      = BinProj.exe
+BIN      = Project3.exe
 CXXFLAGS = $(CXXINCS) -g3
 CFLAGS   = $(INCS) -g3
 DEL      = C:\Program Files (x86)\Embarcadero\Dev-Cpp\devcpp.exe INTERNAL_DEL
@@ -24,11 +24,11 @@ clean: clean-custom
 $(BIN): $(OBJ)
 	$(CPP) $(LINKOBJ) -o $(BIN) $(LIBS)
 
-trienode.o: trienode.c
-	$(CPP) -c trienode.c -o trienode.o $(CXXFLAGS)
+main.o: main.cpp
+	$(CPP) -c main.cpp -o main.o $(CXXFLAGS)
 
-listnode.o: listnode.c
-	$(CPP) -c listnode.c -o listnode.o $(CXXFLAGS)
+trienode.o: trienode.cpp
+	$(CPP) -c trienode.cpp -o trienode.o $(CXXFLAGS)
 
-main.o: main.c
-	$(CPP) -c main.c -o main.o $(CXXFLAGS)
+listnode.o: listnode.cpp
+	$(CPP) -c listnode.cpp -o listnode.o $(CXXFLAGS)
