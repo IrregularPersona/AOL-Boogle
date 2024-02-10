@@ -1,8 +1,6 @@
 # Building:
 # If you want to build a working .exe file of this collection of files, 
 # here are some of the things you can do.
-#
-#
 # a. Dev-C++ users:
 #		If you are a Dev-C++ user, all you have to do is paste all the 
 #		files of the repo into a project file. A project is file is made
@@ -14,7 +12,6 @@
 #		From there, continue on making new files accordingly, and save 
 #		them according to their file extensions and names.
 #		(IMPORTANT FOR LINKING).
-#
 # b. Visual Studio Code users:
 #		If you are using Visual Studio Code as your IDE:
 #			1. 	Figure out what compiler you have (either MinGW / GCC).
