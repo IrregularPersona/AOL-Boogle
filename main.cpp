@@ -1,4 +1,5 @@
 #include "trienode.h"
+#include "extrafunctions.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -7,30 +8,11 @@
 
 #define MAX_WORD_LENGTH  100
 
-void enterToContinue() {
-	printf("Press enter to continue.\n");
-	fflush(stdout);
-	while(getchar() != '\n');
-}
-
-void loadingScreen() {
-	printf("Loading");
-	fflush(stdout);
-	
-	for(int i = 0; i < 3; i++) {
-		Sleep(500);
-		printf(".");
-		fflush(stdout);
-	}
-	printf("\n");
-	Sleep(500);
-}
-
 int main() {
-	trienode *root = NULL;
-	char word[MAX_WORD_LENGTH];
-	char description[MAX_WORD_LENGTH];
-	int choice;
+	trienode *root = NULL; 				// Init root as null as it isnt filled yet.
+	char word[MAX_WORD_LENGTH];			// Var: Word, used to take in an input of Char, for Slang.
+	char description[MAX_WORD_LENGTH];	// Var: Description, used to take in an input of Char, for Slang description.
+	int choice;							// Var: Choiec, used to take in an input of Int, for menu selection.
 
 	while (true) {
 		system("cls");
@@ -48,20 +30,29 @@ int main() {
 				printf("Input a new slang word [Must be more than 1 characters and contains no space]: ");
 				scanf("%99s", word);
 				getchar();
+
 				while(strlen(word) < 2 || strchr(word, ' ') != NULL) {
-					printf("Please enter the word with the expected requirements!\n");
-					printf(">> ");
+					printf("Input a new slang word [Must be more than 1 characters and contains no space]: ");
 					scanf("%99s", word);
+					getchar();
 				}
+
 				printf("Input a new slang word description [Must be more than 2 words]: ");
-				scanf("%99s", description);
+				scanf(" %99[^\n]", description);
 				getchar();
+
+				while (countWords(description) < 2) {
+					printf("Input a new slang word description [Must be more than 2 words]: ");
+					scanf(" %99[^\n]", description);
+					getchar();
+				}
+
 				trieInsert(&root, word);
 				printf("Slang '%s' inserted.\n", word);
 				loadingScreen();
 				enterToContinue();
 				break;
-			case  2:
+			case 2:
 				printf("Enter slang to search for [Must be more than 1 characters and contains no space]: ");
 				scanf("%99s", word);
 				getchar();
@@ -85,12 +76,10 @@ int main() {
 				printf("Input a prefix to be searched: ");
 				scanf("%s", word);
 				search_trie(root, word);
-				Sleep(1000);
 				enterToContinue();
 				break;
 			case 4:
 				printtrie(root);
-				Sleep(1000);
 				enterToContinue();
 				break;
 			case  5:
