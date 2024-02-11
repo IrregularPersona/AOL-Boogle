@@ -6,7 +6,7 @@
 #include <stdbool.h>
 #include <Windows.h>
 
-#define MAX_WORD_LENGTH  100
+#define MAX_WORD_LENGTH 100
 
 int main() {
 	trienode *root = NULL; 				// Init root as null as it isnt filled yet.
@@ -26,7 +26,7 @@ int main() {
 		scanf("%d", &choice);
 
 		switch (choice) {
-			case  1:
+			case 1:
 				printf("Input a new slang word [Must be more than 1 characters and contains no space]: ");
 				scanf("%99s", word);
 				getchar();
@@ -82,7 +82,7 @@ int main() {
 				printtrie(root);
 				enterToContinue();
 				break;
-			case  5:
+			case 5:
 				printf("Exiting program.\n");
 				exit(EXIT_SUCCESS);
 			default:
