@@ -39,26 +39,6 @@ void insertAtEnd(ListNode **head, const char *description) {
     current->next = newNode;
 }
 
-void deleteNode(ListNode **head, const char *description) {
-    ListNode *current = *head;
-    ListNode *previous = NULL;
-
-    while (current != NULL) {
-        if (strcmp(current->description, description) ==  0) {
-            if (previous == NULL) {
-                *head = current->next;
-            } else {
-                previous->next = current->next;
-            }
-            free(current->description);
-            free(current);
-            return;
-        }
-        previous = current;
-        current = current->next;
-    }
-}
-
 ListNode *searchNode(ListNode *head, const char *description) {
     ListNode *current = head;
     while (current != NULL) {
@@ -67,7 +47,7 @@ ListNode *searchNode(ListNode *head, const char *description) {
         }
         current = current->next;
     }
-    return NULL; // Not found
+    return NULL;
 }
 
 void freeList(ListNode *head) {
