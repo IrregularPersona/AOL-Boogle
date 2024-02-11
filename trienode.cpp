@@ -42,20 +42,20 @@ bool trieInsert(trienode **root, const char *signedtext) {
 }
 
 void print_trie(trienode *node, unsigned char *prefix, int length, int *counter) {
-    if (node->terminal) {
-        printf("%d. %s\n", ++(*counter), prefix);
-    }
+	if (node->terminal) {
+		printf("%d. %s\n", ++(*counter), prefix);
+	}
 
-    unsigned char newPref[length + 2];
-    memcpy(newPref, prefix, length);
-    newPref[length + 1] = '\0';
+	unsigned char newPref[length + 2];
+	memcpy(newPref, prefix, length);
+	newPref[length + 1] = '\0';
 
-    for (int i = 0; i < char_num; i++) {
-        if (node->child_node[i] != NULL) {
-            newPref[length] = i;
-            print_trie(node->child_node[i], newPref, length + 1, counter);
-        }
-    }
+	for (int i = 0; i < char_num; i++) {
+		if (node->child_node[i] != NULL) {
+			newPref[length] = i;
+			print_trie(node->child_node[i], newPref, length + 1, counter);
+		}
+	}
 }
 
 void printtrie(trienode *root) {
@@ -69,47 +69,48 @@ void printtrie(trienode *root) {
 
 }
 
-void search_prefix(trienode *node, unsigned char *prefix, int length, int originalLength) {
-    if (node == NULL) {
-        return;
-    }
+void search_prefix(trienode *node, unsigned char *prefix, int length, int originalLength, int *counter) {
+	if (node == NULL) {
+		return;
+	}
 
-    if (node->terminal) {
-        prefix[length] = '\0';  // Ensure null-termination
-        printf("%s\n", prefix);
-    }
+	if (node->terminal) {
+		prefix[length] = '\0';
+		printf("%d. %s\n", ++(*counter), prefix);
+	}
 
-    for (int i = 0; i < char_num; i++) {
-        if (node->child_node[i] != NULL) {
-            prefix[length] = i;
-            search_prefix(node->child_node[i], prefix, length + 1, originalLength);
-        }
-    }
+	for (int i = 0; i < char_num; i++) {
+		if (node->child_node[i] != NULL) {
+			prefix[length] = i;
+			search_prefix(node->child_node[i], prefix, length + 1, originalLength, counter);
+		}
+	}
 }
 
 bool search_trie(trienode *root, char *signedtext) {
-    unsigned char *text = (unsigned char *)signedtext;
-    int length = strlen(signedtext);
+	unsigned char *text = (unsigned char *)signedtext;
+	int length = strlen(signedtext);
 
-    trienode *temp = root;
+	trienode *temp = root;
 
-    for (int i = 0; i < length; i++) {
-        if (temp->child_node[text[i]] == NULL) {
-            printf("There is no prefix “%s” in the dictionary\n", signedtext);
-            return false;
-        }
+	for (int i = 0; i < length; i++) {
+		if (temp->child_node[text[i]] == NULL) {
+			printf("There is no prefix “%s” in the dictionary\n", signedtext);
+			return false;
+		}
 
-        temp = temp->child_node[text[i]];
-    }
+		temp = temp->child_node[text[i]];
+	}
 
-    printf("Matching words for prefix '%s':\n", signedtext);
-    unsigned char prefix[length + 1];
-    memcpy(prefix, text, length);
-    prefix[length] = '\0';
+	printf("Matching words for prefix '%s':\n", signedtext);
+	unsigned char prefix[length + 1];
+	memcpy(prefix, text, length);
+	prefix[length] = '\0';
+	int counter = 0;
 
-    search_prefix(temp, prefix, length, length);
+	search_prefix(temp, prefix, length, length, &counter);
 
-    return true;
+	return true;
 }
 
 bool node_has_child(trienode *node) {
@@ -122,47 +123,4 @@ bool node_has_child(trienode *node) {
 	}
 
 	return false;
-}
-
-trienode *deleteStr(trienode *node, unsigned char *text, bool *deleted) {
-	if (node == NULL) {
-		return node;
-	}
-
-	if(*text == '\0') {
-		if(node->terminal) {
-			node->terminal = false;
-			*deleted = true;
-
-			if(!node_has_child(node)) {
-				free(node);
-				return NULL;
-			}
-		}
-
-		return node;
-	}
-
-	node->child_node[text[0]] = deleteStr(node->child_node[text[0]], text +   1, deleted);
-
-	if(*deleted && !node_has_child(node) && !node->terminal) {
-		free(node);
-		return NULL;
-	}
-
-	return node;
-}
-
-
-bool deleteContents(trienode *root, char *signedtext) {
-	unsigned char *text = (unsigned char *)signedtext;
-	bool result = false;
-
-	if (root == NULL) {
-		return false;
-	}
-
-	root = deleteStr(root, text, &result);
-
-	return result;
 }
