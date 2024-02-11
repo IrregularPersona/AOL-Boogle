@@ -3,6 +3,9 @@
 #include <stdbool.h>
 #include <Windows.h>
 
+// 		A function to quite literally pause the console, 
+//		and to continue the program after a newline input.
+
 void enterToContinue() {
     printf("Press enter to continue.\n");
     int c;
@@ -29,7 +32,7 @@ int countWords(char *input) {
     bool inWord = false;
 
     for (int i = 0; i < strlen(input); i++) {
-        if (input[i] == ' ' || input[i] == '\n' || input[i] == '\t') {
+        if (input[i] == ' ' || input[i] == '\n') {
             inWord = false;
         } else if (!inWord) {
             words++;
