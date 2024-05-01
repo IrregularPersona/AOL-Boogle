@@ -27,6 +27,11 @@ void loadingScreen() {
 	Sleep(500);
 }
 
+void clearInputBuffer() {
+    int c;
+    while((c = getchar()) != '\n' && c != EOF);
+}
+
 int countWords(char *input) {
     int words = 0;
     bool inWord = false;
@@ -41,4 +46,16 @@ int countWords(char *input) {
     }
 
     return words;
+}
+
+bool checkForSpaces(char* str) {
+    int length = strlen(str);
+
+    for(int i = 0; i < length; i++) {
+        if(str[i] == ' ') {
+            return true;
+            break;
+        }
+    }
+    return false;
 }

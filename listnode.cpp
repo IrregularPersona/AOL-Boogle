@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 
+// A function to create a new linked node
 
 ListNode *createListNode(const char *description) {
     ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
@@ -14,14 +15,7 @@ ListNode *createListNode(const char *description) {
     return newNode;
 }
 
-void insertAtBeginning(ListNode **head, const char *description) {
-    ListNode *newNode = createListNode(description);
-    if (newNode == NULL) {
-        return;
-    }
-    newNode->next = *head;
-    *head = newNode;
-}
+// Push tail 
 
 void insertAtEnd(ListNode **head, const char *description) {
     ListNode *newNode = createListNode(description);
@@ -37,27 +31,4 @@ void insertAtEnd(ListNode **head, const char *description) {
         current = current->next;
     }
     current->next = newNode;
-}
-
-ListNode *searchNode(ListNode *head, const char *description) {
-    ListNode *current = head;
-    while (current != NULL) {
-        if (strcmp(current->description, description) ==  0) {
-            return current;
-        }
-        current = current->next;
-    }
-    return NULL;
-}
-
-void freeList(ListNode *head) {
-    ListNode *current = head;
-    ListNode *nextNode;
-
-    while (current != NULL) {
-        nextNode = current->next;
-        free(current->description);
-        free(current);
-        current = nextNode;
-    }
 }

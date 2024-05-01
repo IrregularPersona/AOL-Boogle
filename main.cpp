@@ -9,10 +9,10 @@
 #define MAX_WORD_LENGTH 100
 
 int main() {
-	trienode *root = NULL; 				// Init root as null as it isnt filled yet.
-	char word[MAX_WORD_LENGTH];			// Var: Word, used to take in an input of Char, for Slang.
+	trienode *root = NULL; 				// Init root as NULL.
+	char word[MAX_WORD_LENGTH];			// Var: Word, used to take in an input of a char, for slangs.
 	char description[MAX_WORD_LENGTH];	// Var: Description, used to take in an input of Char, for Slang description.
-	int choice;							// Var: Choiec, used to take in an input of Int, for menu selection.
+	int choice;							// Var: Choice, used to take in an input of Int, for menu selection.
 
 	while (true) {
 		system("cls");
@@ -27,31 +27,33 @@ int main() {
 
 		switch (choice) {
 			case 1:
-				printf("Input a new slang word [Must be more than 1 characters and contains no space]: ");
-				scanf("%99s", word);
-				getchar();
+                printf("Input a new slang word [Must be more than 1 character and contains no space]: ");
+                clearInputBuffer(); 
+                fgets(word, sizeof(word), stdin);
+                word[strcspn(word, "\n")] = '\0';
 
-				while(strlen(word) < 2 || strchr(word, ' ') != NULL) {
-					printf("Input a new slang word [Must be more than 1 characters and contains no space]: ");
-					scanf("%99s", word);
-					getchar();
-				}
+                while (strlen(word) < 2 || checkForSpaces(word)) {
+                    printf("Input a new slang word [Must be more than 1 character and contains no space]: ");
+                    clearInputBuffer();
+                    fgets(word, sizeof(word), stdin);
+                    word[strcspn(word, "\n")] = '\0';
+                }
 
-				printf("Input a new slang word description [Must be more than 2 words]: ");
-				scanf(" %99[^\n]", description);
-				getchar();
+                printf("Input a new slang word description [Must be more than 2 words]: ");
+                fgets(description, sizeof(description), stdin);
+                description[strcspn(description, "\n")] = '\0';
 
-				while (countWords(description) < 2) {
-					printf("Input a new slang word description [Must be more than 2 words]: ");
-					scanf(" %99[^\n]", description);
-					getchar();
-				}
+                while (countWords(description) < 2) {
+                    printf("Input a new slang word description [Must be more than 2 words]: ");
+                    fgets(description, sizeof(description), stdin);
+                    description[strcspn(description, "\n")] = '\0'; 
+                }
 
-				trieInsert(&root, word);
-				printf("Slang '%s' inserted.\n", word);
-				loadingScreen();
-				enterToContinue();
-				break;
+                trieInsert(&root, word);
+                printf("Slang '%s' inserted.\n", word);
+                loadingScreen();
+                enterToContinue();
+                break;
 			case 2:
 				printf("Enter slang to search for [Must be more than 1 characters and contains no space]: ");
 				scanf("%99s", word);

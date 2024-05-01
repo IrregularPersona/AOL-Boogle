@@ -1,7 +1,7 @@
 #ifndef TRIENODE_H
 #define TRIENODE_H
 
-#define char_num  256
+#define char_num 256
 
 typedef struct ListNode {
     char *description;
@@ -18,7 +18,6 @@ trienode *createNode();
 bool trieInsert(trienode **root, const char *signedtext);
 void printtrie(trienode *root);
 bool search_trie(trienode *root, char *signedtext);
-bool deleteContents(trienode *root, char *signedtext);
 // Other function declarations
 
 #endif
