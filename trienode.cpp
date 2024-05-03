@@ -4,6 +4,15 @@
 #include <stdbool.h>
 #include <stdlib.h>
 
+/*
+ *  Function: createNode
+ *  -----------
+ *  @param = void
+ *  
+ *  Meant to create a new node, to accomodate
+ * 	the characters that are to be pushed into the tree.
+ */
+
 trienode *createNode() {
 	trienode *newNode = (trienode *) malloc(sizeof *newNode);
 
@@ -14,6 +23,19 @@ trienode *createNode() {
 	newNode->terminal = false;
 	return newNode;
 }
+
+/*
+ *  Function: trieInsert
+ *  -----------
+ *  @param = trienode**, const char*
+ *  
+ *  Functions as a way to insert characters into the tree.
+ * 	It assigns a new node for every character within the 
+ * 	provided string. Finally, once at the last character,
+ * 	it returns and sets a bool linked to that specific 
+ * 	character to be true, indicating that this is the end 
+ * 	of a string.
+ */
 
 bool trieInsert(trienode **root, const char *signedtext) {
 	if(*root == NULL) {
@@ -41,6 +63,20 @@ bool trieInsert(trienode **root, const char *signedtext) {
 	}
 }
 
+/*
+ *  Function: print_trie
+ *  -----------
+ *  @param = trienode*, unsigned char*, int, int*
+ *  
+ *  Functions as a way to print all words saved 
+ * 	within the tree. It works by checking if a node
+ * 	is a terminal node or not, and printing the string
+ * 	up until the terminal node if it is a terminal. It 
+ * 	searches trhough the tree recursively. Counter 
+ * 	variable functions as a way to list it in a proper
+ * 	numerical order.
+ */
+
 void print_trie(trienode *node, unsigned char *prefix, int length, int *counter) {
 	if (node->terminal) {
 		printf("%d. %s\n", ++(*counter), prefix);
@@ -58,6 +94,15 @@ void print_trie(trienode *node, unsigned char *prefix, int length, int *counter)
 	}
 }
 
+/*
+ *  Function: printtrie
+ *  -----------
+ *  @param = trienode*
+ *  
+ *  Functions as a bridge to the actual 
+ * 	print_trie function. Serves as modularity.
+ */
+
 void printtrie(trienode *root) {
 	if(root == NULL) {
 		printf("There is no slang word yet in the dictionary.\n");
@@ -68,6 +113,20 @@ void printtrie(trienode *root) {
 	print_trie(root, NULL, 0, &counter);
 
 }
+
+/*
+ *  Function: search_prefix
+ *  -----------
+ *  @param = trienode*, unsigned char*, int, int, int
+ *  
+ *  Functions as a way to look up strings with 
+ * 	a specific set of prefix. Works similarly 
+ * 	to print_trie, with it being recursively 
+ * 	checking the characters, but with a change 
+ * 	that the user inputs a set amount of characters,
+ * 	and that the function only traverses a specific
+ * 	side of the tree.
+ */
 
 void search_prefix(trienode *node, unsigned char *prefix, int length, int originalLength, int *counter) {
 	if (node == NULL) {
@@ -87,6 +146,16 @@ void search_prefix(trienode *node, unsigned char *prefix, int length, int origin
 	}
 }
 
+/*
+ *  Function: search_trie
+ *  -----------
+ *  @param = trienode*, char*
+ *  
+ *  Functions similarly to printtrie, as it
+ * 	functions as a bridge to the actual search_prefix
+ * 	function. Serves as modularity.
+ */
+
 bool search_trie(trienode *root, char *signedtext) {
 	unsigned char *text = (unsigned char *)signedtext;
 	int length = strlen(signedtext);
@@ -102,7 +171,7 @@ bool search_trie(trienode *root, char *signedtext) {
 		temp = temp->child_node[text[i]];
 	}
 
-	printf("Matching words for prefix '%s':\n", signedtext);
+	printf("\nMatching words for prefix '%s':\n", signedtext);
 	unsigned char prefix[length + 1];
 	memcpy(prefix, text, length);
 	prefix[length] = '\0';
@@ -111,16 +180,4 @@ bool search_trie(trienode *root, char *signedtext) {
 	search_prefix(temp, prefix, length, length, &counter);
 
 	return true;
-}
-
-bool node_has_child(trienode *node) {
-	if(node == NULL) return false;
-
-	for(int i = 0; i <  char_num; i++) {
-		if(node->child_node[i] != NULL) {
-			return true;
-		}
-	}
-
-	return false;
 }

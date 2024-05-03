@@ -3,7 +3,15 @@
 #include <string.h>
 #include <stdlib.h>
 
-// A function to create a new linked node
+/*
+ *  Function: createListNode
+ *  -----------
+ *  @param = const char*
+ *  
+ *  Meant to create a new linked node, 
+ *  to accomodate the contents of the description.
+ *  (Super unnecessary, but cool thing to learn from)
+ */
 
 ListNode *createListNode(const char *description) {
     ListNode *newNode = (ListNode *)malloc(sizeof(ListNode));
@@ -15,7 +23,14 @@ ListNode *createListNode(const char *description) {
     return newNode;
 }
 
-// Push tail 
+/*
+ *  Function: insertAtEnd
+ *  -----------
+ *  @param = ListNode**, const char*
+ *  
+ *  Pushing a newly created node, to the tail
+ *  of the linked list.
+ */
 
 void insertAtEnd(ListNode **head, const char *description) {
     ListNode *newNode = createListNode(description);
